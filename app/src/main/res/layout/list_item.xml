@@ -35,7 +35,6 @@
                 android:layout_height="50dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="String"
                 android:textSize="14sp" />
 
             <EditText
@@ -43,9 +42,9 @@
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:ems="10"
-                android:inputType="number"
+                android:inputType="number|numberDecimal"
                 android:minHeight="48dp"
-                android:text="Number"
+                android:text=" "
                 android:textSize="13sp" />
 
             <RadioGroup

@@ -19,16 +19,5 @@ data class FieldItem(
     @SerializedName("type")
     var type: String?,
     @SerializedName("values")
-    val values: Values?
-)
-
-data class Values (
-    @SerializedName("none")
-    val none: String,
-    @SerializedName("v1")
-    val v1: String,
-    @SerializedName("v2")
-    val v2: String,
-    @SerializedName("v3")
-    val v3: String
+    val values: Map<String, String>?
 )

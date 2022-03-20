@@ -1,23 +1,37 @@
 package com.example.task_7.presentation.ui.vm
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.task_7.data.ApiItem
+import com.example.task_7.data.ApiPost
+import com.example.task_7.data.ApiResponse
 import com.example.task_7.data.RepositoryImpl
-import com.example.task_7.presentation.di.NetworkModule
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class MainViewModel (context: Context) : ViewModel() {
+class MainViewModel @Inject constructor (private val repositoryImpl: RepositoryImpl) : ViewModel() {
 
     var apiForm: MutableLiveData<ApiItem> = MutableLiveData()
-
+    var apiResponse: MutableLiveData<ApiResponse> = MutableLiveData()
     init{
-        val repositoryImpl = RepositoryImpl(NetworkModule.provideApiService(NetworkModule.provideRetrofit()))
+        getData()
+    }
+
+    private fun getData(){
         CoroutineScope(Dispatchers.Default).launch {
             val api = repositoryImpl.getApiItem()
             withContext(Dispatchers.Main){
                 apiForm.value = api
+            }
+        }
+    }
+
+    fun sendPost(map: Map<String, String>) {
+        CoroutineScope(Dispatchers.Default).launch {
+            val apiSend = ApiPost(map)
+            val response = repositoryImpl.sendResponse(apiSend)
+            withContext(Dispatchers.Main){
+                apiResponse.value = response
             }
         }
     }

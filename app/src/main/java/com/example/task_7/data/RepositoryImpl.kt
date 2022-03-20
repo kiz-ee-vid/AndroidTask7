@@ -1,12 +1,16 @@
 package com.example.task_7.data
 
 import com.example.task_7.domain.IRepository
-import io.reactivex.Single
+import javax.inject.Inject
 
-class RepositoryImpl (private val apiService: ApiService) : IRepository {
+class RepositoryImpl @Inject constructor(private val apiService: ApiService) : IRepository {
 
     override suspend fun getApiItem(): ApiItem? {
         return apiService.getApiItem().body()
+    }
+
+    override suspend fun sendResponse(post: ApiPost): ApiResponse?{
+        return apiService.sendResponse(post).body()
     }
 
 }
