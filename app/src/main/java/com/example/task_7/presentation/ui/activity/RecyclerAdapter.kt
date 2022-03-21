@@ -1,6 +1,5 @@
-package com.example.task_7.presentation
+package com.example.task_7.presentation.ui.activity
 
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.example.task_7.presentation.ui
+package com.example.task_7.presentation.ui.activity
 
 import android.app.AlertDialog
 import android.content.Context
@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.task_7.databinding.ActivityMainBinding
-import com.example.task_7.presentation.RecyclerAdapter
 import com.example.task_7.presentation.di.App
 import com.example.task_7.presentation.ui.vm.MainViewModel
 import kotlinx.coroutines.CoroutineScope
