@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.example.task_7.R.string.OK
 
 class MainActivity : AppCompatActivity() {
     @Inject
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             it?.let {
                 supportActionBar?.title = it.title
                 val recyclerView: RecyclerView = binding.form
-                contactsAdapter = RecyclerAdapter(it.fields, this)
+                contactsAdapter = RecyclerAdapter(it.fields)
                 Glide.with(this)
                     .load(it.image)
                     .into(binding.imageView)
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.sendPost(contactsAdapter.map) {
                     AlertDialog.Builder(this)
                         .setMessage(it.result)
-                        .setPositiveButton("OK", null)
+                        .setPositiveButton(getString(OK), null)
                         .create()
                         .show()
                     binding.progressBar.visibility = View.INVISIBLE

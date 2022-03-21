@@ -1,14 +1,15 @@
 package com.example.task_7.data
 
+import com.example.task_7.domain.utils.Constants
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiService {
-    @GET("http://test.clevertec.ru/tt/meta/")
+    @GET(Constants.GET_ENDPOINT)
     suspend fun getApiItem(): Response<ApiItem>
 
-    @POST("http://test.clevertec.ru/tt/data/")
+    @POST(Constants.POST_ENDPOINT)
     suspend fun sendResponse(@Body post: ApiPost): Response<ApiResponse>
 }
