@@ -19,6 +19,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.task_7.R.string.OK
+import com.example.task_7.data.FieldItem
 
 class MainActivity : AppCompatActivity() {
     @Inject
@@ -29,8 +30,9 @@ class MainActivity : AppCompatActivity() {
             factory
         ).get(MainViewModel::class.java)
     }
-    lateinit var contactsAdapter: RecyclerAdapter
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val recyclerView: RecyclerView by lazy {binding.form}
+    lateinit var recyclerAdapter: RecyclerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -47,21 +49,21 @@ class MainActivity : AppCompatActivity() {
         viewModel.apiForm.observe(this, {
             it?.let {
                 supportActionBar?.title = it.title
-                val recyclerView: RecyclerView = binding.form
-                contactsAdapter = RecyclerAdapter(it.fields)
+                recyclerAdapter = RecyclerAdapter(it.fields)
                 Glide.with(this)
                     .load(it.image)
                     .into(binding.imageView)
                 binding.progressBar.visibility = View.INVISIBLE
-                recyclerView.adapter = contactsAdapter
+                recyclerView.adapter = recyclerAdapter
                 recyclerView.layoutManager = LinearLayoutManager(this)
+                binding.submitButton.isEnabled = true
             }
         })
 
         binding.submitButton.setOnClickListener() {
-            if (checkInternetConnection()) {
+            if (checkInternetConnection()){
                 binding.progressBar.visibility = View.VISIBLE
-                viewModel.sendPost(contactsAdapter.map) {
+                viewModel.sendPost(recyclerAdapter.map) {
                     AlertDialog.Builder(this)
                         .setMessage(it.result)
                         .setPositiveButton(getString(OK), null)
@@ -71,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
     }
 
     private fun checkInternetConnection(): Boolean {

@@ -49,7 +49,7 @@ class RecyclerAdapter(var fieldsList: List<FieldItem>) :
                     val value = if (!p0.toString().contains('.'))
                         p0.toString() + ".0" else p0.toString()
                     map[item.name] = value
-                    savedInput[item.name] = p0.toString()
+                    savedInput[item.name] = value
                 }
                 override fun afterTextChanged(p0: Editable?) {
                 }
