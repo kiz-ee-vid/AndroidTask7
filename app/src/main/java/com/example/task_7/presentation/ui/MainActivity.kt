@@ -35,18 +35,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        (application as App).getAppComponent().inject(this)
         binding.progressBar.visibility = View.VISIBLE
         CoroutineScope(Dispatchers.Default).launch {
             while (!checkInternetConnection())
                 delay(3000)
             runOnUiThread() {
-                launch()
+                viewModel.getData()
             }
         }
-    }
 
-    private fun launch() {
-        (application as App).getAppComponent().inject(this)
         viewModel.apiForm.observe(this, {
             it?.let {
                 supportActionBar?.title = it.title
