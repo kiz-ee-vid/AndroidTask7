@@ -3,10 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_lessons/Task_7/app/src/main/res/drawable/spinner_ring.xml" value="0.11296296296296296" />
         <entry key="..\:/Android_lessons/Task_7/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Android_lessons/Task_7/app/src/main/res/layout/list_edit.xml" value="0.25416666666666665" />
         <entry key="..\:/Android_lessons/Task_7/app/src/main/res/layout/list_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Android_lessons/Task_7/app/src/main/res/layout/numeric_edit.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android_lessons/Task_7/app/src/main/res/layout/progress_bar.xml" value="0.25416666666666665" />
         <entry key="..\:/Android_lessons/Task_7/app/src/main/res/layout/string_edit.xml" value="0.25416666666666665" />
         <entry key="..\:/Android_lessons/Task_7/app/src/main/res/layout/test_item.xml" value="0.25416666666666665" />
       </map>

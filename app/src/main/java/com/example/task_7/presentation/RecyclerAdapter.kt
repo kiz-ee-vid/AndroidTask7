@@ -23,6 +23,7 @@ class RecyclerAdapter(var fieldsList: List<FieldItem>, val context: Context) :
         private val binding = StringEditBinding.bind(itemView)
         fun bind(item: FieldItem) {
             map[item.name.toString()] = ""
+            binding.textView.text = item.title
             binding.TEXT.addTextChangedListener(object: TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
@@ -36,15 +37,17 @@ class RecyclerAdapter(var fieldsList: List<FieldItem>, val context: Context) :
     }
 
     inner class NumericHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = NumericEditBinding.bind(itemView)
+        private val binding = NumericEditBinding.bind(itemView)
         fun bind(item: FieldItem) {
             map[item.name.toString()] = ""
+            binding.textView.text = item.title
             binding.NUMERIC.addTextChangedListener(object: TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    val number = binding.NUMERIC
-                    map[item.name.toString()] = binding.NUMERIC.text.toString()
+                    val value = if (!p0.toString().contains('.'))
+                        p0.toString() + ".0" else p0.toString()
+                    map[item.name.toString()] = value
                 }
                 override fun afterTextChanged(p0: Editable?) {
                 }
@@ -55,18 +58,25 @@ class RecyclerAdapter(var fieldsList: List<FieldItem>, val context: Context) :
     inner class ListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ListEditBinding.bind(itemView)
         fun bind(item: FieldItem) {
+            binding.textView.text = item.title
+            var checked = false
             item.values?.forEach {
                 if (it.key != "none") {
                     val radioButton = RadioButton(binding.root.context)
                     radioButton.text = it.value
+                    radioButton.tag = it.key
                     binding.LIST.addView(radioButton)
                 }
                 else{
-                    map[item.name.toString()] = it.value
+                    map[item.name.toString()] = it.key
+                    checked = true
                 }
             }
             binding.LIST.setOnCheckedChangeListener { radioGroup, i ->
-                map[item.name.toString()] = radioGroup.findViewById<RadioButton>(i).text.toString()
+                map[item.name.toString()] = radioGroup.findViewById<RadioButton>(i).tag.toString()
+            }
+            if (!checked){
+                binding.LIST.check(binding.LIST.getChildAt(0).id)
             }
         }
     }
@@ -95,8 +105,8 @@ class RecyclerAdapter(var fieldsList: List<FieldItem>, val context: Context) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (fieldsList[position].type) {
-            "TEXT" -> (holder as StringHolder).bind(fieldsList[position])
-            "NUMERIC" -> (holder as NumericHolder).bind(fieldsList[position])
+            Constants.TEXT -> (holder as StringHolder).bind(fieldsList[position])
+            Constants.NUMERIC -> (holder as NumericHolder).bind(fieldsList[position])
             else -> (holder as ListHolder).bind(fieldsList[position])
         }
     }

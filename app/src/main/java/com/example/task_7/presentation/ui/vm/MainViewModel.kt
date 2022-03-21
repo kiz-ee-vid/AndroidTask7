@@ -12,26 +12,27 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor (private val repositoryImpl: RepositoryImpl) : ViewModel() {
 
     var apiForm: MutableLiveData<ApiItem> = MutableLiveData()
-    var apiResponse: MutableLiveData<ApiResponse> = MutableLiveData()
     init{
         getData()
     }
 
     private fun getData(){
-        CoroutineScope(Dispatchers.Default).launch {
-            val api = repositoryImpl.getApiItem()
-            withContext(Dispatchers.Main){
-                apiForm.value = api
+            CoroutineScope(Dispatchers.Default).launch {
+                val api = repositoryImpl.getApiItem()
+                withContext(Dispatchers.Main) {
+                    apiForm.value = api
+                }
             }
-        }
     }
 
-    fun sendPost(map: Map<String, String>) {
+    fun sendPost(map: Map<String, String>, dialogShow: (ApiResponse) -> Unit) {
         CoroutineScope(Dispatchers.Default).launch {
             val apiSend = ApiPost(map)
             val response = repositoryImpl.sendResponse(apiSend)
             withContext(Dispatchers.Main){
-                apiResponse.value = response
+                if (response != null) {
+                    dialogShow(response)
+                }
             }
         }
     }

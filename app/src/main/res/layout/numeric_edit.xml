@@ -28,7 +28,8 @@
             android:hint="Numeric"
             android:inputType="number|numberDecimal"
             android:minHeight="48dp"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:imeOptions="actionDone"/>
 
     </TableRow>
 
